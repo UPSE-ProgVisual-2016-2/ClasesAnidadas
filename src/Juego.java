@@ -6,6 +6,8 @@ import java.util.Random;
 
 public class Juego {
 
+	public static final String consola = "SuperNintendo";
+	
 	static class PersonajeJuego{
 		private String nombrePersonaje;
 		private int defensa;
@@ -17,6 +19,13 @@ public class Juego {
 			this.defensa = defensa;
 			this.poder = poder;
 		}
+
+		@Override
+		public String toString() {
+			return "PersonajeJuego [nombrePersonaje=" + nombrePersonaje + ", defensa=" + defensa + ", poder=" + poder
+					+ "]";
+		}
+	
 	}
 	
 	class Jugador{
@@ -53,7 +62,12 @@ public class Juego {
 		public void setPersonajeElegido(Juego.PersonajeJuego personajeElegido) {
 			this.personajeElegido = personajeElegido;
 		}
-	
+
+		@Override
+		public String toString() {
+			return "Jugador [nombreJugador=" + nombreJugador + ", puntajeJugador=" + puntajeJugador
+					+ ", personajeElegido=" + personajeElegido + "]";
+		}
 	}
 	
 	private List<Juego.PersonajeJuego> personajesDisponibles = new ArrayList<Juego.PersonajeJuego>();
@@ -62,16 +76,12 @@ public class Juego {
 	private Jugador ganador;
 	private LocalDateTime fechaPartida;
 	
-	Juego(Jugador jA, Jugador jB)
+	Juego()
 	{
-		this.jugadorA = jA;
-		this.jugadorB = jB;
 		this.fechaPartida = LocalDateTime.now();
 	}
 	
-	
-	
-	private Jugador Jugar()
+	public Jugador Jugar()
 	{
 		Jugador ganador = null;
 		
@@ -95,7 +105,9 @@ public class Juego {
 				{
 					System.out.println("El jugador B " + jugadorB.getNombreJugador() + " ha sido derrotado");
 					ganador = jugadorA;
+					break;
 				}
+				System.out.println("\n");
 				break;
 			
 			case 2:
@@ -105,7 +117,7 @@ public class Juego {
 				int defensaA = r.nextInt(jugadorA.getPersonajeElegido().defensa);
 				System.out.println("El nivel de defensa del jugador A es: " + defensaA);
 				int danoA = ((poderB - defensaA>0)?poderB-defensaA:0);
-				jugadorB.setPuntajeJugador(jugadorA.getPuntajeJugador()-danoA);
+				jugadorA.setPuntajeJugador(jugadorA.getPuntajeJugador()-danoA);
 				System.out.println("El jugadorA recibio un dano de: " + danoA + ". Los puntos de vida del jugadorB son: " + jugadorA.getPuntajeJugador());
 				
 				
@@ -113,7 +125,9 @@ public class Juego {
 				{
 					System.out.println("El jugador A " + jugadorA.getNombreJugador() + " ha sido derrotado");
 					ganador = jugadorB;
+					break;
 				}
+				System.out.println("\n");
 				break;
 
 			default:
@@ -174,5 +188,12 @@ public class Juego {
 	public LocalDateTime getFechaPartida() {
 		return fechaPartida;
 	}
+
+	@Override
+	public String toString() {
+		return "Juego [ganador=" + ganador + ", fechaPartida=" + fechaPartida + "]";
+	}
+	
+	
 
 }
